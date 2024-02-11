@@ -2,16 +2,14 @@ body {
   margin: 0;
 }
 .container {
-  width: 700px;
-  height: 700px;
+  width: 95vw;
+  height: 95vw;
   display: flex;
   flex-wrap:wrap;
-  align-items:stretch;
+  /* align-items:stretch; */  /*this is the default value!*/
   /* margin: 1em; */
 }
 .square {
   border: 1px solid rgb(255,0,0);
   box-sizing: border-box;
-  flex-basis: 50%;
-
 }
