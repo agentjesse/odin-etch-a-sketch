@@ -1,5 +1,5 @@
 //global state & node references
-const startSideSquares = 8;
+const startSideSquares = 6;
 let totalSquares = Math.pow( startSideSquares, 2 );
 const container = document.querySelector('.container');
 const newGridBtn = document.querySelector('.gridPrompt');
@@ -7,14 +7,14 @@ const newGridBtn = document.querySelector('.gridPrompt');
 //random rgb color function
 const randomRGB = ()=> `rgb(${Math.ceil(Math.random()*255)},${Math.ceil(Math.random()*255)},${Math.ceil(Math.random()*255)})`;
 
-//fn to create and append square divs. use default for start
+//fn to create and append square divs. use default for first run
 const generateSquares = (sideSquares = startSideSquares)=> {
   // console.log(sideSquares);
   while (totalSquares) {
     const squareDiv = document.createElement('div');
     //set individual inline styles without overwriting via CSSStyleDeclaration object
     //set flexbasis to a percentage with 3 decimal places without rounding up
-    squareDiv.style.flexBasis = `${ Math.floor( 1 / startSideSquares * 100000 ) / 1000 }%`;
+    squareDiv.style.flexBasis = `${ Math.floor( 1 / sideSquares * 100000 ) / 1000 }%`;
     //classList property returns a DOMTokenList collection for manipulating element's classes with methods
     squareDiv.classList.add('square');
     container.append(squareDiv);
@@ -23,16 +23,25 @@ const generateSquares = (sideSquares = startSideSquares)=> {
 };
 generateSquares();
 
-//event listener on parent container to catch bubbling mouseover events of children. no padding on parent, so itwill not affect it.
+//event listener on parent container to catch bubbling mouseover events of children.
 container.addEventListener('mouseover', e=> {
   e.stopPropagation();
-  //random bg color change when mouse enters
-  e.target.style.backgroundColor = randomRGB();
+  if (e.target.className === 'square'){
+    //random bg color change when mouse enters
+    e.target.style.backgroundColor = randomRGB();
+  }
 });
 
 //event listener for button to remove and remake grid
-newGridBtn.addEventListener('click', e=>{
+newGridBtn.addEventListener('click', e=> {
   e.stopPropagation();
-  totalSquares= Math.pow( 2, 2 );
-  generateSquares(2);
+  const newGridSize = +prompt('Enter squares for the sides of the new grid: (max 100)',20);
+  if ( newGridSize > 0 && newGridSize < 101 ){ //check input in range
+    //remove all children of container
+    container.replaceChildren();
+    //make new custom size grid
+    totalSquares= Math.pow( newGridSize, 2 );
+    generateSquares(newGridSize);
+  }
+  // else { console.log(`invalid entry: ${newGridSize}`); }
 });
