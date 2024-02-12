@@ -1,11 +1,13 @@
-//global state
-const gridSideSquares = 16;
+//global state & node references
+const gridSideSquares = 8;
 let totalSquares = Math.pow( gridSideSquares, 2 );
-
-// reference nodes
 const container = document.querySelector('.container');
+const newGridBtn = document.querySelector('gridPrompt');
 
-//create divs in memory
+//random rgb color function
+const randomRGB = ()=> `rgb(${Math.ceil(Math.random()*255)},${Math.ceil(Math.random()*255)},${Math.ceil(Math.random()*255)})`;
+
+//create and append square divs
 while (totalSquares) {
   const squareDiv = document.createElement('div');
   //set individual inline styles without overwriting via CSSStyleDeclaration object
@@ -17,4 +19,9 @@ while (totalSquares) {
   totalSquares--;
 }
 
-
+//event listener on parent container to catch bubbling mouseover events of children. no padding on parent, so itwill not affect it.
+container.addEventListener('mouseover', e=> {
+  e.stopPropagation();
+  //random bg color change when mouse enters
+  e.target.style.backgroundColor = randomRGB();
+});

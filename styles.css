@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .container {
   width: 95vw;
@@ -10,6 +11,6 @@ body {
   /* margin: 1em; */
 }
 .square {
-  border: 1px solid rgb(255,0,0);
+  border: 1px solid rgb(225, 225, 225);
   box-sizing: border-box;
 }
